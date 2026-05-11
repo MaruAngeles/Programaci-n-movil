@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Guide: El Reto Móvil</title>
+    <!-- Usamos Bootstrap 5.3.8 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-bg: #cfc5b2;
+            --secondary-bg: #b9ad99;
+            --text-muted: #797d80;
+            --accent: #4a4d4f;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .adventure-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-section {
+            text-align: center;
+            border-bottom: 2px solid var(--text-muted);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        .header-section h1 {
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-card {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-left: 5px solid var(--text-muted);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .section-card:hover {
+            transform: scale(1.01);
+        }
+
+        .btn-adventure {
+            background-color: var(--text-muted);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .btn-adventure:hover {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar-custom {
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--text-muted);
+            transition: width 0.5s ease-in-out;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="adventure-container">
+
+            <!-- Encabezado -->
+            <div class="header-section">
+                <h1>Guía de Inicio</h1>
+                <p class="lead">Programación de Aplicaciones Móviles</p>
+            </div>
+
+            <!-- Barra de Progreso -->
+            <div class="progress-bar-custom">
+                <div class="progress-fill" style="width: {{ (progress / 5) * 100 }}%;"></div>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- INTRODUCCIÓN -->
+            {% if progress == 0 %}
+            <div class="text-center">
+                <h3>Bienvenido al curso</h3>
+                <p>En este juego aprenderás sobre los reglamentos, criterios de evaluación y el calendario de la materia
+                    Programación móvil. </p>
+                <form action="/start" method="post" class="mt-4">
+                    <button type="submit" class="btn btn-adventure">JUGAR</button>
+                </form>
+            </div>
+
+            <!-- PARTES DEL JUEGO -->
+            {% elif progress in [1, 2, 3, 4] %}
+            {% set section_keys = {1: 'rules', 2: 'grades', 3: 'skills', 4: 'timeline'} %}
+            {% set current_key = section_keys[progress] %}
+            {% set section = content[current_key] %}
+
+            <div class="section-content">
+                <h2 class="mb-4">{{ section.title }}</h2>
+
+                {% if not session.get('commitment') %}
+                <div class="card section-card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Información importante:</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for item in section.info %}
+                            <li class="list-group-item bg-transparent">{{ item }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- lectura -->
+                <div class="commitment-zone p-4 bg-light rounded text-center">
+                    <h4>Confirmación de lectura</h4>
+                    <p>¿Listo para las preguntas?</p>
+                    <form action="/commit" method="post">
+                        <div class="form-check form-check-inline mb-3">
+                            <input class="form-check-input" type="checkbox" name="commit_check" id="commitCheck"
+                                required>
+                            <label class="form-check-label" for="commitCheck">Sí.</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-adventure btn-sm">CONFIRMAR</button>
+                    </form>
+                </div>
+                {% else %}
+                <!-- confirmación -->
+                <div class="quiz-zone">
+                    <h4 class="mb-3 text-success"> Por favor responde lo siguiente:</h4>
+                    <form action="/next_section" method="post">
+                        {% for q in section.questions %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">{{ q.text }}</label>
+                            {% for option in q.options %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ q.id }}"
+                                    id="{{ q.id }}_{{ loop.index }}" value="{{ option }}" required>
+                                <label class="form-check-label" for="{{ q.id }}_{{ loop.index }}">
+                                    {{ option }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-adventure">SIGUIENTE </button>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Final -->
+            {% elif progress == 5 %}
+            <div class="text-center">
+                <h2 class="text-success">Juego Finalizado</h2>
+                <p class="lead mt-3">Ya sabes acerca de las reglas y criterios de la materia.</p>
+                <a href="/restart" class="btn btn-outline-dark">REINICIAR </a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 - Universidad Politécnica de Querétaro | Programación Móvil</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
