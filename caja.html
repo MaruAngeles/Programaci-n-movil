@@ -1,0 +1,55 @@
+<!-- caja.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema Caja</title>
+
+    <style>
+
+        body{
+            background-color: #f5eee6;
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        h1{
+            color: #5c4033;
+        }
+
+        button{
+            padding: 10px 15px;
+            border: none;
+            background-color: #8b6f5c;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: #6f5647;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Sistema Caja</h1>
+
+    <p>
+        Este módulo permite registrar pedidos y mostrar
+        el total acumulado de ventas.
+    </p>
+
+    <button onclick="mostrarPedidos()">
+        Mostrar pedidos
+    </button>
+
+    <script src="caja.js"></script>
+
+</body>
+</html>
