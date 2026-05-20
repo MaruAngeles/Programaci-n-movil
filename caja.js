@@ -1,15 +1,10 @@
-// caja.js
-
-
-// ARRAY DE PEDIDOS
+// array de pedidos
 let pedidos = [];
 
-
-// TOTAL ACUMULADO
 let totalAcumulado = 0;
 
 
-// FUNCIÓN AGREGAR PEDIDO
+//  pedido
 function agregarPedido(producto, precio) {
 
     let pedido = {
@@ -26,10 +21,12 @@ function agregarPedido(producto, precio) {
     ${producto} - $${precio}
     `);
 
+    alert(`${producto} agregado al pedido`);
+
 }
 
 
-// FUNCIÓN MOSTRAR PEDIDOS
+// mostrar pedidosa
 function mostrarPedidos() {
 
     console.log("===== PEDIDOS =====");
@@ -46,11 +43,6 @@ function mostrarPedidos() {
     TOTAL ACUMULADO: $${totalAcumulado}
     `);
 
+    alert(`Total acumulado: $${totalAcumulado}`);
+
 }
-
-
-// PRUEBAS
-agregarPedido("Hamburguesa", 80);
-agregarPedido("Pizza", 120);
-
-mostrarPedidos();
