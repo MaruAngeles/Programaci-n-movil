@@ -1,86 +1,20 @@
-// PRODUCTOS DE LA CAFETERIA
-const productos = [
-
-    {
-        id: 1,
-        nombre: "Cafe Latte",
-        precio: 65
-    },
-
-    {
-        id: 2,
-        nombre: "Cheesecake",
-        precio: 75
-    },
-
-    {
-        id: 3,
-        nombre: "Frappé",
-        precio: 80
-    }
-
-];
+const cocina = require("./cocina");
 
 
-// ARRAY DE PEDIDOS
 let pedidos = [];
 
 
-// TOTAL ACUMULADO
 let totalAcumulado = 0;
 
+//funcion para agregar pedidos
 
-// HERRAMIENTA PARA LEER DATOS EN CONSOLA
-const readline = require("node:readline/promises");
-
-const consola = readline.createInterface({
-
-    input: process.stdin,
-    output: process.stdout
-
-});
-
-
-// MOSTRAR PRODUCTOS
-function mostrarProductos() {
-
-    console.log("\n===== MENU =====");
-
-    productos.forEach(function(producto) {
-
-        console.log(
-            producto.id +
-            ". " +
-            producto.nombre +
-            " - $" +
-            producto.precio
-        );
-
-    });
-
-}
-
-
-// BUSCAR PRODUCTO POR ID
-function buscarProducto(id) {
-
-    return productos.find(function(producto) {
-
-        return producto.id === id;
-
-    });
-
-}
-
-
-// FUNCION agregarPedido()
 function agregarPedido(idProducto) {
 
-    let producto = buscarProducto(idProducto);
+    let producto = cocina.buscarProducto(idProducto);
 
     if (!producto) {
 
-        console.log("Producto no encontrado.");
+        console.log("\nProducto no encontrado.");
         return;
 
     }
@@ -89,47 +23,15 @@ function agregarPedido(idProducto) {
 
     totalAcumulado += producto.precio;
 
-    console.log("\nPedido agregado:");
-    console.log(producto.nombre + " - $" + producto.precio);
+    console.log(
+        `\nPedido agregado: ${producto.nombre}`
+    );
 
 }
 
+// Lista de pedidos
 
-// CALCULAR SUBTOTAL CON REDUCE()
-function calcularSubtotal() {
-
-    let subtotal = pedidos.reduce(function(acumulador, pedido) {
-
-        // DESTRUCTURING
-        let { precio } = pedido;
-
-        return acumulador + precio;
-
-    }, 0);
-
-    return subtotal;
-
-}
-
-
-// CALCULAR IVA
-function calcularIVA(subtotal) {
-
-    return subtotal * 0.16;
-
-}
-
-
-// CALCULAR TOTAL
-function calcularTotal(subtotal, iva) {
-
-    return subtotal + iva;
-
-}
-
-
-// MOSTRAR PEDIDOS
-function listarPedidosCliente() {
+function listarPedidos() {
 
     console.log("\n===== PEDIDOS =====");
 
@@ -140,62 +42,130 @@ function listarPedidosCliente() {
 
     }
 
-    pedidos.forEach(function(pedido, index) {
-
-        // DESTRUCTURING
-        let { nombre, precio } = pedido;
+    pedidos.forEach(({ nombre, precio }, index) => {
 
         console.log(
-            (index + 1) +
-            ". " +
-            nombre +
-            " - $" +
-            precio
+            `${index + 1}. ${nombre} - $${precio}`
         );
 
     });
 
-    let subtotal = calcularSubtotal();
+}
 
-    let iva = calcularIVA(subtotal);
+//Calculo de la cuenta
+function calcularCuenta() {
 
-    let total = calcularTotal(subtotal, iva);
+    let subtotal = pedidos.reduce(
+        (acumulador, pedido) => {
 
-    console.log("\nSubtotal: $" + subtotal);
-    console.log("IVA: $" + iva);
-    console.log("TOTAL: $" + total);
+            return acumulador + pedido.precio;
+
+        },
+        0
+    );
+
+    let iva = subtotal * 0.16;
+
+    let total = subtotal + iva;
+
+    console.log("\n===== CUENTA =====");
+
+    console.log(`Subtotal: $${subtotal}`);
+    console.log(`IVA: $${iva}`);
+    console.log(`Total: $${total}`);
 
 }
 
+//Exporta los modulos
+module.exports = {
+    pedidos,
+    totalAcumulado,
+    agregarPedido,
+    listarPedidos,
+    calcularCuenta
+};
 
-// INICIAR PROGRAMA
-async function iniciarCaja() {
+// menu
 
-    let continuar = "si";
+const readline = require("node:readline/promises");
 
-    while (continuar === "si") {
+const consola = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-        mostrarProductos();
 
-        let opcion = await consola.question(
-            "\nEscribe el ID del producto que quieres agregar: "
+
+async function menuCaja() {
+
+    let opcion = "";
+
+    while (opcion !== "0") {
+
+        console.log("\n===== CAJA =====");
+
+        console.log("1. Ver productos");
+        console.log("2. Agregar pedido");
+        console.log("3. Ver pedidos");
+        console.log("4. Calcular cuenta");
+        console.log("0. Salir");
+
+        opcion = await consola.question(
+            "\nElige una opcion: "
         );
 
-        agregarPedido(Number(opcion));
+        
+        if (opcion === "1") {
 
-        continuar = await consola.question(
-            "\nQuieres agregar otro producto? (si/no): "
-        );
+            cocina.consultarProductos();
 
-        continuar = continuar.toLowerCase();
+        }
+
+       
+        else if (opcion === "2") {
+
+            cocina.consultarProductos();
+
+            let idProducto = Number(
+                await consola.question(
+                    "\nID del producto: "
+                )
+            );
+
+            agregarPedido(idProducto);
+
+        }
+
+        else if (opcion === "3") {
+
+            listarPedidos();
+
+        }
+
+        else if (opcion === "4") {
+
+            calcularCuenta();
+
+        }
+
+        else if (opcion !== "0") {
+
+            console.log("\nOpcion no valida.");
+
+        }
 
     }
 
-    listarPedidosCliente();
-
     consola.close();
+
+    console.log("\nPrograma terminado.");
 
 }
 
 
-iniciarCaja();
+
+if (require.main === module) {
+
+    menuCaja();
+
+}
