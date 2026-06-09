@@ -9,14 +9,18 @@ import {Perfil} from './components/Perfil';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Perfil/>
+      
+      <Perfil nombre = "Maru" carrera = "Ing" materia = "Móvil" cuatri = "9"/>
+      
+      <Perfil nombre = "Maru" carrera = "Ing" materia = "POO" cuatri = "6"/>
+      {/* <Text> ------------------------------------- </Text>
       <Image source={require('./assets/wave.png')}/>
       <Text>Hola Mundo React Native </Text>
       <Text> ------------------------------------- </Text>
       <Saludo/>
 
       <Text> ------------------------------------- </Text>
-      <Saludos2/>
+      <Saludos2/> */}
       <StatusBar style="auto" />
     </View>
   );
