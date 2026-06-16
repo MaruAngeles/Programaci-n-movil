@@ -10,9 +10,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       
-      <Perfil nombre = "Maru" carrera = "Ing" materia = "Móvil" cuatri = "9"/>
+      <Perfil style={styles.tarjetaRoja} nombre = "Maru" carrera = "Ing" materia = "Móvil" cuatri = "9"/>
       
-      <Perfil nombre = "Maru" carrera = "Ing" materia = "POO" cuatri = "6"/>
+      <Perfil style={styles.tarjetaVerde} nombre = "Maru" carrera = "Ing" materia = "POO" cuatri = "6"/>
+
+      <Perfil style={styles.tarjetaAzul} nombre = "Maru" carrera = "Ing" materia = "Móvil" cuatri = "9"/>
       {/* <Text> ------------------------------------- </Text>
       <Image source={require('./assets/wave.png')}/>
       <Text>Hola Mundo React Native </Text>
@@ -33,5 +35,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
+  tarjetaVerde:{backgroundColor: '#C8A2C8',},
+  tarjetaRoja:{backgroundColor: '#FF6B6B',},
+  tarjetaAzul:{backgroundColor: '#87CEEB'}
 });
