@@ -6,6 +6,9 @@ import TarjetasScreen from './TarjetasScreen'
 import Componente1 from './Componente1'
 import { Button } from 'react-native-web';
 import ComponentesNativosScreen from './ComponentesNativosScreen';
+import PressableScreen from './PressableScreen';
+import SwitchScreen from './SwitchScreen';
+import PracricaScroll from './PracticaScroll';
 
 
 /*Zona 2: Main -Componentes */
@@ -16,8 +19,14 @@ export default function App() {
             return <TarjetasScreen/>;
         case 'componente1':
             return <Componente1/>;
+        case 'Switch':
+            return <SwitchScreen/>;
         case 'componentesNativos':
             return <ComponentesNativosScreen />;
+        case 'Pressable':
+            return <PressableScreen />;
+        case 'Scroll':
+            return <PracricaScroll />;
 
         case 'menu':
             default:   
@@ -29,6 +38,12 @@ export default function App() {
                     <Button title= "Practica Componente1" onPress={()=> setScreen('componente1')} />
 
                     <Button title="Practica Componentes Nativos" onPress={() => setScreen('componentesNativos')}/>
+
+                    <Button title="Practica Switch" onPress={() => setScreen('Switch')}/>
+
+                    <Button title="Pressable" onPress={() => setScreen('Pressable')}/>
+
+                    <Button title="Scroll" onPress={() => setScreen('Scroll')}/>
 
                 </View>
   ); //return
