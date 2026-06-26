@@ -9,6 +9,8 @@ import ComponentesNativosScreen from './ComponentesNativosScreen';
 import PressableScreen from './PressableScreen';
 import SwitchScreen from './SwitchScreen';
 import PracricaScroll from './PracticaScroll';
+import { Componente4_0 } from './Componente4_0';
+import ComponenteAlerta from './ComponenteAlerta'
 
 
 /*Zona 2: Main -Componentes */
@@ -27,6 +29,10 @@ export default function App() {
             return <PressableScreen />;
         case 'Scroll':
             return <PracricaScroll />;
+        case 'Componente4_0':
+            return <Componente4_0 />;
+        case 'ComponenteAlerta':
+            return <ComponenteAlerta />;
 
         case 'menu':
             default:   
@@ -44,6 +50,10 @@ export default function App() {
                     <Button title="Pressable" onPress={() => setScreen('Pressable')}/>
 
                     <Button title="Scroll" onPress={() => setScreen('Scroll')}/>
+
+                    <Button title="Práctica TextInput" onPress={() => setScreen('Componente4_0')}/>
+
+                    <Button title="Práctica Componente Alerta" onPress={() => setScreen('ComponenteAlerta')}/>
 
                 </View>
   ); //return
