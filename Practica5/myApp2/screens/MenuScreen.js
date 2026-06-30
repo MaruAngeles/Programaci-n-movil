@@ -1,7 +1,7 @@
 /*Zona 1: Importancia de archivos y Componentes */
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import TarjetasScreen from './TarjetasScreen'
 import Componente1 from './Componente1'
 import ComponentesNativosScreen from './ComponentesNativosScreen';
@@ -12,10 +12,24 @@ import { Componente4_0 } from './Componente4_0';
 import ComponenteAlerta from './ComponenteAlerta'
 import FlatListScreen from './FlatListScreen';
 import SectionListScreen from './SectionListScreen';
+import { Home } from './Home';
+import {ImagenFondo} from './ImagenFondo';
+import { SplashScreen } from './SplashScreen';
+
 
 /*Zona 2: Main -Componentes */
 export default function App() {
-    const [screen,setScreen]= useState('manu');
+    const [screen,setScreen]= useState('menu');
+
+    useEffect(() => {
+        if (screen === 'splashScreen') {
+            const timer = setTimeout(() => {
+                setScreen('home');
+            }, 6000);
+            return () => clearTimeout(timer);
+        }
+    }, [screen]);
+
     switch(screen){
         case 'tarjetas':
             return <TarjetasScreen/>;
@@ -37,6 +51,14 @@ export default function App() {
             return <FlatListScreen />;
         case 'SectionList':
             return <SectionListScreen />;
+        case 'imagenFondo':
+            return <ImagenFondo style={styles.container}/>;
+        case 'home':
+            return <Home/>;
+        case 'splashScreen':
+            return <SplashScreen/>;
+        case 'menu':
+
 
         case 'menu':
             default:   
@@ -62,6 +84,10 @@ export default function App() {
                     <Button title="FlatList" onPress={() => setScreen('FlatList')}/>
 
                     <Button title="SectionList" onPress={() => setScreen('SectionList')}/>
+
+                    <Button title='Imagen Bg' onPress={() => setScreen('imagenFondo')}/>
+
+                    <Button title='Splash' onPress={() => setScreen('splashScreen')}/>
 
                 </View>
   ); //return
