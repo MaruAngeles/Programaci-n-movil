@@ -1,10 +1,9 @@
 /*Zona 1: Importancia de archivos y Componentes */
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Button} from 'react-native';
 import React,{useState} from 'react';
 import TarjetasScreen from './TarjetasScreen'
 import Componente1 from './Componente1'
-import { Button } from 'react-native-web';
 import ComponentesNativosScreen from './ComponentesNativosScreen';
 import PressableScreen from './PressableScreen';
 import SwitchScreen from './SwitchScreen';
@@ -42,8 +41,8 @@ export default function App() {
         case 'menu':
             default:   
             return (
-                <View>
-                    <Text>Menu de Practicas</Text>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Menu de Practicas</Text>
                     <Button title= "Practica Tarjetas" onPress={()=> setScreen('tarjetas')} />
                         
                     <Button title= "Practica Componente1" onPress={()=> setScreen('componente1')} />
@@ -76,6 +75,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    gap: 10,
   },
+
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  }
 });
