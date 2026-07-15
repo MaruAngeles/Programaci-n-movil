@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, Image, Button} from 'react-native';
 import React,{useState, useEffect} from 'react';
 import TarjetasScreen from './TarjetasScreen'
 import Componente1 from './Componente1'
-import ComponentesNativosScreen from './ComponentesNativosScreen';
 import PressableScreen from './PressableScreen';
 import SwitchScreen from './SwitchScreen';
 import PracricaScroll from './PracticaScroll';
@@ -15,7 +14,7 @@ import SectionListScreen from './SectionListScreen';
 import { Home } from './Home';
 import {ImagenFondo} from './ImagenFondo';
 import { SplashScreen } from './SplashScreen';
-import ComponentesNativos from './ComponentesNativos';
+
 
 
 /*Zona 2: Main -Componentes */
@@ -38,8 +37,6 @@ export default function App() {
             return <Componente1/>;
         case 'Switch':
             return <SwitchScreen/>;
-        case 'componentesNativos':
-            return <ComponentesNativosScreen />;
         case 'Pressable':
             return <PressableScreen />;
         case 'Scroll':
@@ -58,11 +55,7 @@ export default function App() {
             return <Home/>;
         case 'splashScreen':
             return <SplashScreen/>;
-        case 'ComponentesNativos':
-            return <ComponentesNativos/>;
-        case 'menu':
 
-        
 
 
         case 'menu':
@@ -94,7 +87,7 @@ export default function App() {
 
                     <Button title='Splash' onPress={() => setScreen('splashScreen')}/>
 
-                    <Button title='ComponentesNativos' onPress={() => setScreen('ComponentesNativos')}/>
+
                 </View>
   ); //return
 } //switch

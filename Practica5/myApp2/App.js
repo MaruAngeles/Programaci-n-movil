@@ -5,6 +5,7 @@ import MenuScreen from './screens/MenuScreen';
 import PracticaScroll from './screens/PracticaScroll';
 
 
+
  /*Zona 2: Main -Componentes */
  export default function App() {
   return (

@@ -54,13 +54,12 @@ const estilos= StyleSheet.create({
 
 
 
-// export const Perfil = (props) => {
-//     return(
-//         <View>
-//             <Text> {props.nombre}</Text>
-//             <Text> {props.carrera} </Text>
-//             <Text> {props.materia}</Text>
-//             <Text> {props.cuatri}</Text>
-//         </View>
-//     )
-// }
+export const Menu = (props) => {
+     return(
+         <View>
+             <Text> {props.nombre}</Text>
+             <Text> {props.precio} </Text>
+             <Text> {props.paisOrigen}</Text>
+         </View>
+     )
+ }
